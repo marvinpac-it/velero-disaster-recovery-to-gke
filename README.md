@@ -22,9 +22,10 @@ gke-archives-storage-archives-storage-9c510a3d-025l   Ready    <none>   18m   v1
 ```
 $ velero install \
     --provider gcp \
-    --plugins velero/velero-plugin-for-csi:v0.6.1,velero/velero-plugin-for-gcp:v1.6.0 \
+    --plugins velero/velero-plugin-for-csi:v0.6.1,velero/velero-plugin-for-gcp:v1.8.1 \
     --bucket marvinpac-velero-replica \
     --secret-file ~/credentials-velero-gke \
+    --use-node-agent \
     --features=EnableCSI
 $ velero backup get
 NAME                                            STATUS            ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR

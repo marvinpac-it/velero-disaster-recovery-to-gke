@@ -9,6 +9,10 @@ $ git clone git@github.com:marvinpac-it/terraform-gke-cluster.git
 $ cd terraform-gke-cluster
 $ terraform apply
 > yes
+```
+
+## Install GKE cluster kubectl config
+```
 # Install kubectl config for reaching the cluster (make sure you're logged on to gcloud)
 $ gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)
 # Verify cluster

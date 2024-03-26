@@ -30,3 +30,4 @@ override.tf.json
 
 history-gke-setup.txt
 gke-deploy-history.txt
+mvp-tls-secret.yaml

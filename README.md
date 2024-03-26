@@ -2,7 +2,41 @@
 
 This repo was built using the [Provision a GKE Cluster tutorial](https://developer.hashicorp.com/terraform/tutorials/kubernetes/gke), containing Terraform configuration files to provision an GKE cluster on GCP.
 
-A Minio bucket is replicated into Google Storage using rclone. The replicated bucket is used as the backup location for the GKE deployed velero.
+A Minio bucket is replicated into Google Storage using rclone, A GKE cluster is provisionned with Terraform, Velero is installed pointing to the bucket replica, and restore is performed from this bucket.
+
+## RClone replication of a Minio bucket to Google Storage
+### Install rclone as per documentation
+https://rclone.org/install/
+
+### Create user
+```
+# Add rclone user
+$ sudo mkdir /var/rclone
+$ sudo useradd -r -s /bin/false -b /var/rclone rclone
+```
+
+### Prepare rclone config files (put right credentials and link to GCE account)
+```
+# File /var/rclone/rclone.conf
+[gcs]
+type = google cloud storage
+service_account_file = ~/.config/gcloud/velero-replica.json
+bucket_policy_only = true
+location = europe-west1
+
+[minio]
+type = s3
+provider = Minio
+access_key_id = XXXXXXXXXXXXXXXXXXX
+secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+endpoint = http://192.168.77.201:9000
+```
+
+### Create scheduled task
+```
+# /etc/crontab
+07 6    * * *   rclone   rclone sync minio:velero gcs:marvinpac-velero-replica --modify-window 2s --config /var/rclone/rclone.conf
+```
 
 ## Deploy GKE cluster
 ```

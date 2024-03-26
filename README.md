@@ -11,6 +11,11 @@ $ terraform apply
 > yes
 ```
 
+## If the deployment fails, get credentials and reapply
+```
+$ gcloud container clusters get-credentials archives-storage-gke -z europe-southwest1 --project archives-storage
+```
+
 ## Install GKE cluster kubectl config
 ```
 # Install kubectl config for reaching the cluster (make sure you're logged on to gcloud)
@@ -21,11 +26,6 @@ NAME                                                  STATUS   ROLES    AGE   VE
 gke-archives-storage-archives-storage-20cce987-49kb   Ready    <none>   18m   v1.27.8-gke.1067004
 gke-archives-storage-archives-storage-2506a5d7-mmpx   Ready    <none>   18m   v1.27.8-gke.1067004
 gke-archives-storage-archives-storage-9c510a3d-025l   Ready    <none>   18m   v1.27.8-gke.1067004
-```
-
-## If the deployment fails, get credentials and reapply
-```
-$ gcloud container clusters get-credentials archives-storage-gke -z europe-southwest1 --project archives-storage
 ```
 
 ## Deploy Velero on GKE cluster (make sure you have velero credentials in home directory first)

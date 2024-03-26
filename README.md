@@ -18,11 +18,17 @@ gke-archives-storage-archives-storage-20cce987-49kb   Ready    <none>   18m   v1
 gke-archives-storage-archives-storage-2506a5d7-mmpx   Ready    <none>   18m   v1.27.8-gke.1067004
 gke-archives-storage-archives-storage-9c510a3d-025l   Ready    <none>   18m   v1.27.8-gke.1067004
 ```
+
+## If the deployment fails, get credentials and reapply
+```
+$ gcloud container clusters get-credentials archives-storage-gke -z europe-southwest1 --project archives-storage
+```
+
 ## Deploy Velero on GKE cluster (make sure you have velero credentials in home directory first)
 ```
 $ velero install \
     --provider gcp \
-    --plugins velero/velero-plugin-for-csi:v0.6.1,velero/velero-plugin-for-gcp:v1.8.1 \
+    --plugins velero/velero-plugin-for-csi:v0.6.3,velero/velero-plugin-for-gcp:v1.8.1 \
     --bucket marvinpac-velero-replica \
     --secret-file ~/credentials-velero-gke \
     --use-node-agent \
@@ -35,6 +41,7 @@ daily-backup-all-but-system-20240319030001      Completed         0        0    
 daily-backup-all-but-system-20240318030000      Completed         0        0          2024-03-18 03:00:00 +0000 UTC   25d       default            <none>
 ...
 ```
+
 ## Apply storage class, volume snapshot class, and class mapping yaml files.
 ```
 $ k apply -n velero -f volume-snapshot-class.yaml
@@ -44,6 +51,7 @@ storageclass.storage.k8s.io/pd-velero created
 $ k apply -n velero -f storage-class-mapping.yaml
 configmap/change-storage-class-config created
 ```
+
 ## Test restore (don't forget include-namespaces !!)
 ```
 $ velero restore create corteza-from-daily-backup-all-but-system-20240321030049 --include-namespaces=corteza --from-backup=daily-backup-all-but-system-20240321030049

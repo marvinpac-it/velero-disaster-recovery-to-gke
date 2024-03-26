@@ -2,6 +2,8 @@
 
 This repo was built using the [Provision a GKE Cluster tutorial](https://developer.hashicorp.com/terraform/tutorials/kubernetes/gke), containing Terraform configuration files to provision an GKE cluster on GCP.
 
+A Minio bucket is replicated into Google Storage using rclone. The replicated bucket is used as the backup location for the GKE deployed velero.
+
 ## Deploy GKE cluster
 ```
 # Deploy GKE cluster with terraform

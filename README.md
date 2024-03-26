@@ -29,7 +29,7 @@ gke-archives-storage-archives-storage-9c510a3d-025l   Ready    <none>   18m   v1
 ```
 
 ## Deploy nginx ingress controller
-Pre-requisite, have the marvinpac.com wildcard certificate in a secret file called `mvp-tls-secret.yaml`
+Pre-requisite, have the marvinpac.com wildcard certificate in a secret file called `mvp-tls-secret.yaml` (found in Vaultwarden)
 
 ```
 $ k create ns ingress-nginx
@@ -39,6 +39,7 @@ $ helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-ngi
 ```
 
 ## Deploy Velero on GKE cluster (make sure you have velero credentials in home directory first)
+Pre-requisite, have the credentials-velero-gke file in your path (found in Vaultwarden)
 ```
 $ velero install \
     --provider gcp \

@@ -69,7 +69,7 @@ Pre-requisite, have the marvinpac.com wildcard certificate in a secret file call
 
 ```
 $ k create ns ingress-nginx
-$ k apply -f mvp-tls-secret.yaml
+$ k apply -f mvp-tls-secret.yaml -n ingress-nginx
 $ (if not installed) helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 $ helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --set controller.wildcardTLS.cert=ingress-nginx/star-marvinpac-com --set controller.config.force-ssl-redirect="true" --set controller.extraArgs.default-ssl-certificate=ingress-nginx/star-marvinpac-com
 ```
